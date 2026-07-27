@@ -53,7 +53,7 @@ st.markdown('---')
 # CARREGAMENTO DO MODELO TREINADO
 # ==================================================
 
-modelo = joblib.load('modelo_previsao_defasagem.pkl')
+modelo = joblib.load('models/modelo_previsao_defasagem.pkl')
 
 # ==================================================
 # ABAS PARA NAVEGAÇÃO DE PÁGINA

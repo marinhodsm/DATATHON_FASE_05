@@ -9,20 +9,19 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-diretorio_projeto = 'C:/Users/diego/Desktop/RM368720_DATATHON_FASE_05'
 # ==================================================
 # CONFIGURACAO DA PAGINA
 # ==================================================
 st.set_page_config(
     page_title='Painel de Apoio à Identificação de Alunos em Risco de Defasagem',
-    page_icon=f'{diretorio_projeto}/assets/icone.png',
+    page_icon='assets/icone.png',
     layout='wide'
 )
 
 col1, col2 = st.columns([1, 8])
 
 with col1:
-    st.image(f'{diretorio_projeto}/assets/logotipo.png', width=180)
+    st.image('assets/logotipo.png', width=180)
 
 with col2:
 
@@ -51,7 +50,7 @@ st.markdown('---')
 # ==================================================
 # CARREGAMENTO DO MODELO TREINADO
 # ==================================================
-modelo = joblib.load(f'{diretorio_projeto}/models/modelo_previsao_defasagem.pkl')
+modelo = joblib.load('models/modelo_previsao_defasagem.pkl')
 
 # ==================================================
 # ABAS PARA NAVEGAÇÃO DE PÁGINA

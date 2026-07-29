@@ -657,8 +657,6 @@ with tab4:
 
             st.progress(float(probabilidade))
 
-            st.markdown('---')
-
             if probabilidade < 0.30:
 
                 st.success('🟢 **BAIXO RISCO**')

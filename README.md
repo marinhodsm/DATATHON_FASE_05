@@ -1,84 +1,90 @@
-# 🏥 Painel Inteligente de Apoio à Prevenção da Obesidade
+# 🎓 Painel Inteligente de Apoio à Identificação de Alunos em Risco de Defasagem Escolar
 
 ## 📌 Sobre o Projeto
 
-Este projeto foi desenvolvido com o objetivo de aplicar técnicas de Ciência de Dados e Machine Learning na predição dos níveis de obesidade, contribuindo para a identificação de fatores associados ao excesso de peso e apoiando ações de prevenção em saúde.
+Este projeto foi desenvolvido com o objetivo de aplicar técnicas de Ciência de Dados e Machine Learning para identificar, de forma antecipada, estudantes com maior probabilidade de apresentar aumento na defasagem escolar.
 
-A solução foi construída a partir de um conjunto de dados contendo informações comportamentais, hábitos alimentares, estilo de vida e características corporais dos indivíduos.
+A solução foi construída a partir de uma base histórica contendo indicadores acadêmicos, comportamentais, psicossociais e psicopedagógicos dos alunos, permitindo identificar padrões associados à piora do desempenho ao longo do tempo.
 
-Além da etapa analítica realizada em Jupyter Notebook, o projeto também disponibiliza uma aplicação interativa desenvolvida em Streamlit, permitindo que usuários preencham um formulário e obtenham uma predição personalizada do nível de obesidade.
+Além da etapa analítica desenvolvida em Jupyter Notebook, o projeto disponibiliza uma aplicação web desenvolvida em Streamlit, permitindo que gestores e equipes pedagógicas realizem simulações individuais de risco por meio do preenchimento dos indicadores atuais do estudante.
 
 ---
 
 ## 🎯 Objetivos
 
-* Investigar a capacidade de modelos de Machine Learning em prever níveis de obesidade;
-* Comparar o desempenho de modelos treinados em diferentes cenários;
-* Avaliar a influência de hábitos e comportamentos na predição;
-* Identificar os fatores mais relevantes associados à obesidade;
-* Disponibilizar uma aplicação interativa para demonstração prática do modelo desenvolvido.
+* Identificar padrões associados ao aumento da defasagem escolar;
+* Antecipar alunos com maior probabilidade de piora em avaliações futuras;
+* Comparar diferentes algoritmos de Machine Learning;
+* Avaliar a contribuição dos indicadores educacionais na previsão do risco;
+* Disponibilizar uma aplicação interativa para apoio à tomada de decisão pedagógica.
 
 ---
 
-## 📊 Cenários Avaliados
+## 📊 Estratégia de Modelagem
 
-Foram comparados dois cenários distintos:
+Como o objetivo do desafio consistia em prever a ocorrência de aumento da defasagem antes que ela acontecesse, foi necessária a construção de uma variável alvo baseada na evolução temporal de cada estudante.
 
-### Cenário 01 – Variáveis Comportamentais
+Foram adotadas as seguintes premissas:
 
-Utiliza apenas informações relacionadas a hábitos e estilo de vida, como:
+* Cada aluno foi ordenado cronologicamente por ano de avaliação;
+* Apenas avaliações consecutivas foram consideradas (2022→2023 e 2023→2024);
+* Registros sem avaliação imediatamente posterior foram descartados;
+* Foi considerada situação de risco qualquer redução no indicador de defasagem entre duas avaliações consecutivas, independentemente do nível inicial do aluno.
 
-* Consumo de vegetais;
-* Consumo de água;
-* Frequência de atividade física;
-* Tempo de uso de dispositivos eletrônicos;
-* Consumo de álcool;
-* Hábitos alimentares.
-
-### Cenário 02 – Variáveis Comportamentais + Medidas Corporais
-
-Além das informações comportamentais, incorpora:
-
-* Idade;
-* Altura;
-* Peso.
-
-Este cenário apresentou os melhores resultados preditivos e foi utilizado na aplicação final.
+Dessa forma, o modelo aprende a identificar sinais de piora antes que ela ocorra.
 
 ---
 
 ## 🤖 Modelos Avaliados
 
-Os seguintes algoritmos foram testados:
+Foram comparados dois algoritmos de classificação:
 
+* Regressão Logística
 * Random Forest
-* XGBoost
 
-Após a comparação dos resultados, o modelo XGBoost apresentou o melhor desempenho e foi selecionado para implantação.
+Após a comparação dos resultados, o modelo Random Forest apresentou melhor desempenho geral e foi selecionado para implantação na aplicação final.
 
 ---
 
 ## 📈 Principais Resultados
 
-* Melhor modelo: XGBoost
-* Melhor cenário: Variáveis comportamentais + medidas corporais
-* Predição de 7 níveis distintos de classificação relacionados ao peso corporal
+O modelo Random Forest apresentou desempenho superior em praticamente todas as métricas avaliadas.
 
-Além da avaliação de desempenho, foi realizada análise de importância das variáveis, permitindo identificar os principais fatores associados aos diferentes níveis de obesidade.
+Principais resultados obtidos:
+
+* Melhor modelo: Random Forest
+* Accuracy: aproximadamente 80%
+* ROC-AUC: aproximadamente 0,80
+* Validação cruzada utilizando GroupKFold por aluno
+* Geração de probabilidade individual de risco para cada estudante
+
+Além da avaliação do desempenho dos modelos, também foi realizada análise da importância das variáveis, identificando quais indicadores exercem maior influência na previsão do aumento da defasagem.
+
+Entre os indicadores mais relevantes destacam-se:
+
+* Defasagem Atual
+* IPV — Indicador do Ponto de Virada
+* IPP — Indicador Psicopedagógico
+* IDA — Indicador de Desempenho Acadêmico
 
 ---
 
 ## 🖥 Aplicação Web
 
-A aplicação foi desenvolvida utilizando Streamlit e possui:
+Foi desenvolvida uma aplicação utilizando Streamlit para demonstrar o funcionamento do modelo preditivo.
 
-* Painel executivo com informações sobre obesidade;
-* Página de fatores de risco;
-* Página de hábitos preventivos;
-* Formulário para predição individual.
+A aplicação é composta por quatro páginas principais:
 
-Link de acesso:
-https://marinhodsm-tech-challenge-fase04.streamlit.app/
+* 🏠 Visão Geral
+* 📊 Dashboard Executivo
+* ⭐ Principais Indicadores
+* 🎯 Predição Individual do Aluno
+
+Na página de predição, o usuário informa os indicadores atuais do estudante e o sistema retorna:
+
+* Probabilidade estimada de aumento da defasagem;
+* Classificação do risco (baixo, moderado ou alto);
+* Recomendações de acompanhamento pedagógico.
 
 ---
 
@@ -88,22 +94,24 @@ https://marinhodsm-tech-challenge-fase04.streamlit.app/
 * Pandas
 * NumPy
 * Scikit-Learn
-* XGBoost
+* Random Forest
 * Matplotlib
-* Seaborn
+* Plotly
 * Streamlit
 * Joblib
 
+---
+
 ## 📁 Estrutura de Arquivos
 
-- **obesity.csv**: conjunto de dados utilizado para análise exploratória, engenharia de atributos e treinamento dos modelos.
+- **BASE DE DADOS PEDE 2024 - DATATHON.xlsx**: base de dados utilizada para análise exploratória, engenharia de atributos e treinamento dos modelos.
 
-- **notebook.ipynb**: notebook contendo todas as etapas do projeto, incluindo análise exploratória dos dados (EDA), preparação dos dados, treinamento, avaliação e comparação dos modelos de Machine Learning.
+- **notebook.ipynb**: notebook contendo todas as etapas do projeto, incluindo análise exploratória dos dados (EDA), feature engineering, criação da variável target, treinamento, avaliação e comparação dos modelos de Machine Learning.
 
-- **modelo_obesidade.pkl**: arquivo contendo o modelo XGBoost treinado e utilizado pela aplicação para realizar as predições.
+- **modelo_previsao_defasagem.pkl**: arquivo contendo o modelo Random Forest treinado e utilizado pela aplicação para realizar as predições individuais.
 
-- **aplicacao.py**: aplicação desenvolvida em Streamlit, responsável pela interface interativa, visualização dos insights e realização das predições individuais.
+- **aplicacao.py**: aplicação desenvolvida em Streamlit, responsável pela interface gráfica, dashboard executivo, visualização dos indicadores e realização das predições.
 
-- **requirements.txt**: arquivo contendo as dependências necessárias para execução do projeto e implantação da aplicação.
+- **requirements.txt**: arquivo contendo todas as dependências necessárias para execução local do projeto e implantação da aplicação.
 
 - **video_apresentacao.mp4**: vídeo demonstrando o desenvolvimento do projeto, os principais resultados obtidos e o funcionamento da aplicação.

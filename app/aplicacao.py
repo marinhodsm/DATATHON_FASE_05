@@ -1,13 +1,10 @@
-# APLICACAO STREAMLIT - DASHBOARD + PREDICAO DE AUMENTO NA DEFASAGEM
-
 # ==================================================
 # BIBLIOTECAS E CONFIGURACOES
 # ==================================================
 import joblib
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.graph_objects as go
 
 # ==================================================
 # CONFIGURACAO DA PAGINA
@@ -21,14 +18,27 @@ st.set_page_config(
 col1, col2 = st.columns([1, 8])
 
 with col1:
+
+    st.markdown(
+        '''
+        <div style='margin-top:0px;'>
+        ''',
+        unsafe_allow_html=True
+    )
     st.image('assets/logotipo.png', width=180)
+    st.markdown(
+        '''
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
 
 with col2:
 
     st.markdown(
         '''
         <div style='
-            height:120px;
+            height:110px;
             display:flex;
             align-items:center;
         '>
@@ -37,15 +47,15 @@ with col2:
                 margin:0;
                 font-size:30px;
                 color: #1a365d;
+                font-weight:700;
             '>
-            PAINEL DE APOIO À IDENTIFICAÇÃO DE RISCO DE DEFASAGEM
+            <span style='font-size:20px;color:#718096;font-weight:400'>PAINEL DE APOIO</span><br>
+            IDENTIFICAÇÃO DE RISCO DE DEFASAGEM ESCOLAR
             </h1>
         </div>
         ''',
         unsafe_allow_html=True
     )
-
-st.markdown('---')
 
 # ==================================================
 # CARREGAMENTO DO MODELO TREINADO
@@ -53,29 +63,44 @@ st.markdown('---')
 modelo = joblib.load('models/modelo_previsao_defasagem.pkl')
 
 # ==================================================
-# ABAS PARA NAVEGAÇÃO DE PÁGINA
+# NAVEGACAO DE PAGINA
 # ==================================================
-st.markdown('**NAVEGAÇÃO DE PÁGINAS**')
-
-tab1, tab2, tab3 = st.tabs([
-    '🏠 Visão Geral',
-    '⭐ Principais Indicadores',
-    '🎯 Predição do Aluno'
+tab1, tab2, tab3, tab4 = st.tabs([
+    '🏠 **VISÃO GERAL**',
+    '📊 **DASHBOARD**',
+    '⭐ **PRINCIPAIS INDICADORES**',
+    '🎯 **PREDIÇÃO DO ALUNO**'
 ])
 
 # ==================================================
-# VISÃO GERAL
+# PAGINA 01 - VISAO GERAL
 # ==================================================
 with tab1:
 
     st.markdown(
         '''
-        Este painel foi desenvolvido para apoiar a identificação de fatores associados
-        ao aumento da defasagem escolar e auxiliar ações de prevenção e intervenção pedagógica.
-
-        A ferramenta utiliza técnicas de Ciência de Dados e Machine Learning para analisar
-        indicadores acadêmicos, psicossociais e psicopedagógicos relacionados ao risco de queda no desempenho dos alunos.
-        '''
+        <div style='
+            background:#f7fafc;
+            padding:16px 20px;
+            border-radius:8px;
+            border-left:5px solid #1a365d;
+            font-family: Verdana;
+            color:#2d3748;
+            font-size:15px;
+            line-height:1.5;
+            margin-bottom:20px;
+        '>
+            <p style='margin:0 0 8px 0;'>
+                Este painel foi desenvolvido para apoiar a identificação de fatores associados ao aumento da defasagem escolar
+                e auxiliar ações de prevenção e intervenção pedagógica.
+            </p>
+            <p style='margin:0;'>
+                A ferramenta utiliza técnicas de Ciência de Dados e Machine Learning para analisar indicadores acadêmicos,
+                psicossociais e psicopedagógicos relacionados ao risco de queda no desempenho dos alunos.
+            </p>
+        </div>
+        ''',
+        unsafe_allow_html=True
     )
 
     st.subheader('📋 Funcionalidades')
@@ -86,19 +111,22 @@ with tab1:
 
         st.info(
             '''
-            📊 **ANÁLISE DE FATORES ASSOCIADOS À DEFASAGEM ACADÊMICA**
+            📊 **ANÁLISE DOS INDICADORES ACADÊMICOS**
 
-            Identificação das variáveis mais relevantes para compreender
-            os fatores que contribuem para a defasagem escolar ou queda no desempenho.
+            Avaliação dos indicadores de desenvolvimento educacional,
+            desempenho acadêmico, engajamento, aspectos psicossociais e psicopedagógicos
+            para identificar padrões associados ao aumento da defasagem escolar.
+
             '''
         )
 
         st.info(
             '''
-            📊 **ANÁLISE DE FATORES ASSOCIADOS À DEFASAGEM ACADÊMICA**
+            🤖 **MODELO PREDITIVO BASEADO EM MACHINE LEARNING**
 
-            Identificação das variáveis mais relevantes para compreender
-            os fatores que contribuem para a defasagem escolar ou queda no desempenho.
+            A solução utiliza o algoritmo Random Forest treinado com dados históricos
+            dos estudantes para estimar a probabilidade de aumento da defasagem na
+            avaliação subsequente.
             '''
         )
 
@@ -106,69 +134,283 @@ with tab1:
 
         st.info(
             '''
-            📊 **ANÁLISE DE FATORES ASSOCIADOS À DEFASAGEM ACADÊMICA**
+            🎯 **IDENTIFICAÇÃO PRECOCE DE RISCO**
 
-            Identificação das variáveis mais relevantes para compreender
-            os fatores que contribuem para a defasagem escolar ou queda no desempenho.
+            O modelo estima a probabilidade de piora da defasagem antes que ela ocorra,
+            permitindo identificar alunos que demandam maior atenção e acompanhamento
+            pedagógico preventivo.
             '''
         )
 
         st.info(
             '''
-            📊 **ANÁLISE DE FATORES ASSOCIADOS À DEFASAGEM ACADÊMICA**
+            📈 **APOIO À TOMADA DE DECISÃO PEDAGÓGICA**
 
-            Identificação das variáveis mais relevantes para compreender
-            os fatores que contribuem para a defasagem escolar ou queda no desempenho.
+            Os resultados auxiliam gestores e equipes pedagógicas na priorização
+            de intervenções, contribuindo para o monitoramento contínuo dos alunos
+            e para a prevenção da queda no desempenho acadêmico.
             '''
         )
 
-    st.subheader('🔎 Principais Achados')
-
-    st.success(
-        '''
-        📍 INSIRA SEU TEXTO AQUI.
-
-        📍 INSIRA SEU TEXTO AQUI.
-
-        📍 INSIRA SEU TEXTO AQUI.
-
-        📍 INSIRA SEU TEXTO AQUI.
-        '''
-    )
-
-    st.markdown('---')
-    
-    st.caption(
-        '''
-        Esta ferramenta oferece suporte à tomada de decisão,
-        complementando — e nunca substituindo — a avaliação
-        pedagógica realizada pela equipe escolar.
-        '''
-    )
-
 # ==================================================
-# PRINCIPAIS INDICADORES
+# PAGINA 02 - DASHBOARD
 # ==================================================
 with tab2:
 
+    # ================================
+    # KPIs PRINCIPAIS
+    # ================================
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric('Alunos analisados (2022-2024)', '1.586')
+    col2.metric('Média do INDE (Índice de Desenvolvimento Educacional)', '7.3')
+    col3.metric('Alunos com risco alto', '20,0%')
+    col4.metric('Acurácia do modelo', '80,5%')
+
+    st.markdown('---')
+
+    col1, col2 = st.columns(2)
+    # ================================
+    # DISTRIBUICAO DE DEFASAGEM
+    # ================================
+    with col1:
+    
+        defasagem = [-5, -4, -3, -2, -1, 0, 1, 2, 3]
+        alunos =    [ 0,  0,  3, 90, 441, 421, 81, 16, 2]
+
+        fig_def = go.Figure()
+
+        fig_def.add_bar(
+            x=defasagem,
+            y=alunos,
+            text=alunos,
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#1a365d'
+        )
+
+        fig_def.update_layout(
+            title='📉 Distribuição da Defasagem (2024)',
+            xaxis_title='Faixa Defasagem',
+            yaxis_title='Alunos',
+            height=350,
+            margin=dict(l=20, r=20, t=60, b=20),
+        )
+
+        st.plotly_chart(fig_def, use_container_width=True)
+
+    # ================================
+    # IMPORTANCIA DOS INDICADORES
+    # ================================
+    with col2:
+
+        indicadores = ['Defasagem', 'IPV', 'IPP', 'IDA', 'INDE', 'IEG', 'IPS', 'IAA']
+        importancia = [0.258, 0.163, 0.128, 0.120, 0.118, 0.079, 0.068, 0.067]
+
+        fig_def = go.Figure()
+
+        fig_def.add_bar(
+            x=indicadores,
+            y=importancia,
+            text=[f'{v:.3f}' for v in importancia],
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#2b6cb0'
+        )
+
+        fig_def.update_layout(
+            title='⭐ Importância dos Indicadores',
+            xaxis_title='Indicador',
+            yaxis_title='Importância',
+            height=350,
+            margin=dict(l=20, r=20, t=60, b=20),
+        )
+
+        st.plotly_chart(fig_def, use_container_width=True)
+
+    st.markdown('---')
+
+    # ================================
+    # DISTRIBUIÇÃO DOS INDICADORES
+    # ================================
+    st.markdown('##### 📊 Distribuição dos Indicadores Acadêmicos e Psicossociais (2024)')
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # INDE
+        valores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        frequencia = [0, 0, 0, 0, 5, 51, 124, 331, 415, 127, 1]
+
+        fig_inde = go.Figure()
+
+        fig_inde.add_bar(
+            x=valores,
+            y=frequencia,
+            text=frequencia,
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#4a5568'
+        )
+
+        fig_inde.update_layout(
+            title='INDE',
+            xaxis_title='INDE',
+            yaxis_title='Frequência',
+            height=350,
+            bargap=0,
+            bargroupgap=0,
+            margin=dict(l=20, r=20, t=60, b=20),
+            uniformtext_minsize=12,
+            uniformtext_mode='hide',
+            xaxis=dict(
+                tickmode='array',
+                tickvals=valores,
+                ticktext=valores
+            )
+        )
+
+        st.plotly_chart(fig_inde, use_container_width=True)
+
+    with col2:
+        # IDA
+        valores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        frequencia = [16, 5, 19, 64, 102, 131, 137, 192, 203, 137, 48]
+
+        fig_inde = go.Figure()
+
+        fig_inde.add_bar(
+            x=valores,
+            y=frequencia,
+            text=frequencia,
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#4a5568'
+        )
+
+        fig_inde.update_layout(
+            title='IDA',
+            xaxis_title='IDA',
+            yaxis_title='Frequência',
+            height=350,
+            bargap=0,
+            bargroupgap=0,
+            margin=dict(l=20, r=20, t=60, b=20),
+            uniformtext_minsize=12,
+            uniformtext_mode='hide',
+            xaxis=dict(
+                tickmode='array',
+                tickvals=valores,
+                ticktext=valores
+            )
+        )
+
+        st.plotly_chart(fig_inde, use_container_width=True)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # IPS
+        valores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        frequencia = [0, 0, 0, 59, 26, 23, 244, 65, 586, 46, 5]
+
+        fig_inde = go.Figure()
+
+        fig_inde.add_bar(
+            x=valores,
+            y=frequencia,
+            text=frequencia,
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#4a5568'
+        )
+
+        fig_inde.update_layout(
+            title='IPS',
+            xaxis_title='IPS',
+            yaxis_title='Frequência',
+            height=350,
+            bargap=0,
+            bargroupgap=0,
+            margin=dict(l=20, r=20, t=60, b=20),
+            uniformtext_minsize=12,
+            uniformtext_mode='hide',
+            xaxis=dict(
+                tickmode='array',
+                tickvals=valores,
+                ticktext=valores
+            )
+        )
+
+        st.plotly_chart(fig_inde, use_container_width=True)
+
+    with col2:
+        # IPP
+        valores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        frequencia = [0, 0, 0, 2, 4, 20, 88, 248, 571, 113, 8]
+
+        fig_inde = go.Figure()
+
+        fig_inde.add_bar(
+            x=valores,
+            y=frequencia,
+            text=frequencia,
+            textposition='outside',
+            cliponaxis=False,
+            marker_color='#4a5568'
+        )
+
+        fig_inde.update_layout(
+            title='IPP',
+            xaxis_title='IPP',
+            yaxis_title='Frequência',
+            height=350,
+            bargap=0,
+            bargroupgap=0,
+            margin=dict(l=20, r=20, t=60, b=20),
+            uniformtext_minsize=12,
+            uniformtext_mode='hide',
+            xaxis=dict(
+                tickmode='array',
+                tickvals=valores,
+                ticktext=valores
+            )
+        )
+
+        st.plotly_chart(fig_inde, use_container_width=True)
+
+# ==================================================
+# PAGINA 03 - PRINCIPAIS INDICADORES
+# ==================================================
+with tab3:
+
     st.markdown(
         '''
-        Dentre vários indicadores monitorados, alguns se destacam
-        pela forte contribuição preditiva e pelo impacto direto
-        na análise realizada pela ferramenta.
-        
-        Esses indicadores representam dimensões essenciais do
-        desenvolvimento acadêmico, comportamental e socioemocional
-        dos estudantes, sendo os que mais influenciam o modelo na
-        estimativa de risco de aumento da defasagem escolar.
-
-        Eles funcionam como um conjunto de métricas-chave que sintetizam
-        aspectos críticos da trajetória do aluno, permitindo ao sistema
-        identificar padrões, antecipar possíveis quedas de desempenho e
-        apoiar decisões pedagógicas com maior precisão.
-
-        A seguir, estão os principais indicadores utilizados pelo modelo:
-        '''
+        <div style='
+            background:#f7fafc;
+            padding:22px;
+            border-radius:10px;
+            border:1px solid #e2e8f0;
+            font-family: Verdana;
+            color:#2d3748;
+            line-height:1.7;
+            font-size:14px;
+            margin-bottom:20px;
+        '>
+            <h4 style='margin:0; color:#1a365d; font-weight:700;'>
+                Sobre os principais indicadores
+            </h4>
+            <p style='margin-top:12px;'>
+                Dentre vários indicadores monitorados, alguns se destacam pela forte contribuição preditiva e pelo impacto direto na análise realizada pela ferramenta.
+                Esses indicadores representam dimensões essenciais do desenvolvimento acadêmico, comportamental e socioemocional dos estudantes, sendo os que mais influenciam o modelo na estimativa de risco de aumento da defasagem escolar.
+            </p>
+            <p>
+                Eles funcionam como um conjunto de métricas-chave que sintetizam aspectos críticos da trajetória do aluno, permitindo ao sistema identificar padrões, antecipar possíveis quedas de desempenho e apoiar decisões pedagógicas com maior precisão.
+            </p>
+        </div>
+        ''',
+        unsafe_allow_html=True
     )
 
     col1, col2 = st.columns(2)
@@ -213,7 +455,7 @@ with tab2:
             '''
             **📍IPS — Indicador Psicossocial**
             \nMede aspectos emocionais, sociais e comportamentais do estudante, com base em avaliações realizadas por psicólogos.
-            Ajuda a identificar fatores que podem influenciar o desempenho escolar e o bem-estar geral.
+            Ajuda a identificar fatores que podem influenciar o desempenho escolar e o bem-estar geral do aluno.
             '''
         )
 
@@ -242,188 +484,241 @@ with tab2:
             '''
         )
 
-    st.markdown('---')
-        
-    st.caption(
-        '''
-        Esta ferramenta oferece suporte à tomada de decisão,
-        complementando — e nunca substituindo — a avaliação
-        pedagógica realizada pela equipe escolar.
-        '''
-    )
 # ==================================================
-# PREDICAO DO ALUNO
+# PAGINA 04 - PREDICAO DO ALUNO
 # ==================================================
-with tab3:
+with tab4:
 
     st.markdown(
         '''
-        Informe os indicadores atuais do aluno para estimar a probabilidade de ocorrência de piora em sua defasagem na próxima avaliação.
-        \nComo premissa, o risco não está associado apenas a alunos já em situação de elevada defasagem, mas a qualquer piora em sua trajetória acadêmica.
-        ''')
+        <div style='
+            background:#f7fafc;
+            padding:16px 20px;
+            border-radius:8px;
+            border-left:5px solid #1a365d;
+            font-family: Verdana;
+            color:#2d3748;
+            font-size:15px;
+            line-height:1.5;
+        '>
+            Informe os indicadores atuais do aluno para estimar a probabilidade de ocorrência de piora na defasagem na próxima avaliação.<br>
+            Como premissa, o risco não está associado apenas a alunos já em situação de elevada defasagem, mas a qualquer piora observada em sua trajetória acadêmica.
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
 
-    with st.form('form_predicao'):
+    st.markdown('---')
 
-        st.subheader('Formulário do Aluno')
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-
-            inde = st.number_input(
-                'INDE (índice de desenvolvimento educacional)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            ida = st.number_input(
-                'IDA (indicador de desempenho acadêmico)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            iaa = st.number_input(
-                'IAA (indicador de autoavaliação)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            ieg = st.number_input(
-                'IEG (indicador de engajamento)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-        with col2:
-
-            ips = st.number_input(
-                'IPS (indicador psicossocial)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            ipp = st.number_input(
-                'IPP (indicador psicopedagógico)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            ipv = st.number_input(
-                'IPV (indicador do ponto de virada)',
-                min_value=0.0,
-                max_value=10.0,
-                value=7.0,
-                step=0.1,
-                format='%.1f'
-            )
-
-            defasagem = st.slider(
-                'Defasagem Atual (quanto mais positivo, melhor)',
-                min_value=-5,
-                max_value=3
-            )
-
-        submit = st.form_submit_button(
-            'Realizar Predição',
-            type='primary'
-        )
+    col_form, col_resultado = st.columns(2)
 
     # ==================================================
-    # RESULTADO DA PREDIÇÃO
+    # FORMULÁRIO
     # ==================================================
-    if submit:
 
-        dados = pd.DataFrame({
-            'INDE': [inde],
-            'IDA': [ida],
-            'IAA': [iaa],
-            'IEG': [ieg],
-            'IPS': [ips],
-            'IPP': [ipp],
-            'IPV': [ipv],
-            'Defasagem': [defasagem]
-        })
+    with col_form:
 
-        probabilidade = modelo.predict_proba(dados)[0][1]
-        previsao = modelo.predict(dados)[0]
+        with st.form('form_predicao'):
 
-        st.markdown('---')
+            st.markdown(
+                '<h3 style="text-align: center;">FORMULÁRIO DO ALUNO</h3>',
+                unsafe_allow_html=True
+            )
 
-        st.subheader('Resultado da Predição')
+            col1, col2 = st.columns(2)
 
-        st.metric(
-            label='Probabilidade estimada de risco',
-            value=f'{probabilidade * 100:.1f}%'
+            with col1:
+
+                inde = st.slider(
+                    'INDE (Índice de Desenvolvimento Educacional)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                ida = st.slider(
+                    'IDA (Indicador de Desempenho Acadêmico)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                iaa = st.slider(
+                    'IAA (Indicador de Autoavaliação)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                ieg = st.slider(
+                    'IEG (Indicador de Engajamento)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+            with col2:
+
+                ips = st.slider(
+                    'IPS (Indicador Psicossocial)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                ipp = st.slider(
+                    'IPP (Indicador Psicopedagógico)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                ipv = st.slider(
+                    'IPV (Indicador do Ponto de Virada)',
+                    0.0,
+                    10.0,
+                    7.0,
+                    0.1,
+                    format='%.1f'
+                )
+
+                defasagem = st.slider(
+                    'Defasagem Atual (Quanto maior, melhor.)',
+                    -5,
+                    3,
+                    0
+                )
+
+            submit = st.form_submit_button(
+                'REALIZAR PREDIÇÃO',
+                type='primary',
+                use_container_width=True
+            )
+
+    # ==================================================
+    # PAINEL DE RESULTADO
+    # ==================================================
+    with col_resultado:
+
+        st.markdown(
+            '<h3 style="text-align: center;">RESULTADO DA PREDIÇÃO</h3>',
+            unsafe_allow_html=True
         )
 
-        if probabilidade < 0.30:
+        if submit:
 
-            st.success(
-                '🟢 **Baixo risco de aumento da Defasagem**'
+            dados = pd.DataFrame({
+
+                'INDE': [inde],
+                'IDA': [ida],
+                'IAA': [iaa],
+                'IEG': [ieg],
+                'IPS': [ips],
+                'IPP': [ipp],
+                'IPV': [ipv],
+                'Defasagem': [defasagem]
+
+            })
+
+            probabilidade = modelo.predict_proba(dados)[0][1]
+
+            st.markdown(
+                f'''
+                <div style='
+                    background-color: #f8fafc;
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    border: 1px solid #e2e8f0;
+                    text-align: center;
+                    font-family: Verdana;
+                '>
+                    <div style='font-size: 14px; color: #4a5568;'>
+                        Probabilidade de risco de aumento da defasagem do aluno:
+                    </div>
+                    <div style='font-size: 26px; font-weight: 700; color: #1a365d;'>
+                        {probabilidade*100:.1f}%
+                    </div>
+                </div>
+                ''',
+                unsafe_allow_html=True
             )
 
-            st.info(
+            st.progress(float(probabilidade))
+
+            st.markdown('---')
+
+            if probabilidade < 0.30:
+
+                st.success('🟢 **BAIXO RISCO**')
+
+                recomendacao = '''
+                ✔ Manter o acompanhamento pedagógico.\n
+                ✔ Continuar monitorando os indicadores.\n
+                ✔ Reavaliar periodicamente o desempenho.
                 '''
-                O modelo estima baixa probabilidade de piora na defasagem
-                na próxima avaliação. Recomenda-se manter o acompanhamento
-                pedagógico e monitorar periodicamente os indicadores do
-                aluno.
+
+            elif probabilidade < 0.60:
+
+                st.warning('🟡 **RISCO MODERADO**')
+
+                recomendacao = '''
+                ✔ Intensificar o acompanhamento.\n
+                ✔ Avaliar possíveis fatores de piora.\n
+                ✔ Planejar intervenções preventivas.
                 '''
+
+            else:
+                st.error('🔴 **ALTO RISCO**')
+
+                recomendacao = '''
+                ✔ Priorizar o acompanhamento do aluno.\n
+                ✔ Planejar intervenção pedagógica.\n
+                ✔ Monitorar continuamente sua evolução.
+                '''
+
+            st.markdown(
+                f'''
+                <div style='
+                    background:#f7fafc;
+                    padding:18px 22px;
+                    border-radius:10px;
+                    border:1px solid #e2e8f0;
+                    font-family: Verdana;
+                    color:#2d3748;
+                    line-height:1.6;
+                    font-size:15px;
+                    margin-top: 10px;
+                '>
+                    <strong style='font-size:16px; color:#1a365d;'>Sugestões:</strong>
+                    <ul style='margin-top:10px;'>
+                        {recomendacao}</ul>
+                </div>
+                ''',
+                unsafe_allow_html=True
             )
-
-        elif probabilidade < 0.60:
-
-            st.warning(
-                '🟡 **Risco moderado de aumento da defasagem**'
-            )
-
-            st.info(
-                '''
-                O modelo indica atenção para possível piora da defasagem.
-                Recomenda-se acompanhar a evolução do aluno e avaliar
-                intervenções pedagógicas preventivas.
-                '''
-            )
-
+            
         else:
 
-            st.error(
-                '🔴 **Alto risco de aumento da defasagem**'
+            st.markdown(
+                '''
+                <p style='text-align:center;'>
+                    <em>Após o preenchimento do formulário, o resultado da predição estará visível.</em>
+                </p>
+                ''',
+                unsafe_allow_html=True
             )
 
-            st.info(
-                '''
-                O modelo estima elevada probabilidade de aumento da
-                defasagem na próxima avaliação. Recomenda-se priorizar
-                o acompanhamento pedagógico e adotar estratégias de
-                intervenção para reduzir o risco de queda no desempenho.
-                '''
-            )
-
-        st.markdown('---')
-
-        st.caption(
-            '''
-            Esta ferramenta oferece suporte à tomada de decisão,
-            complementando — e nunca substituindo — a avaliação
-            pedagógica realizada pela equipe escolar.
-            '''
-        )
+st.markdown('---')
+st.caption('Esta ferramenta oferece suporte à tomada de decisão, complementando — e nunca substituindo — a avaliação pedagógica realizada pela equipe escolar.')

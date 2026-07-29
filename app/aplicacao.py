@@ -125,8 +125,8 @@ with tab1:
             🤖 **MODELO PREDITIVO BASEADO EM MACHINE LEARNING**
 
             A solução utiliza o algoritmo Random Forest treinado com dados históricos
-            dos estudantes para estimar a probabilidade de aumento da defasagem na
-            avaliação subsequente.
+            dos estudantes para estimar a probabilidade de aumento da defasagem do
+            aluno na avaliação subsequente.
             '''
         )
 
